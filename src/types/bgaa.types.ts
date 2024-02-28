@@ -18,8 +18,8 @@ export type Group = {
   laboratoryHours: string;
   practicHours: string;
   seminarHours: string;
-  exam: true;
-  offset: false;
+  exam: boolean;
+  offset: boolean;
   additionalInfo: string;
   countPodgroups: string;
   uniqueId: string;
