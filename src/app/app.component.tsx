@@ -1,5 +1,7 @@
+import Groups from "../components/groups/groups.component";
+
 const App = () => {
-  return <div></div>;
+  return <Groups />;
 };
 
 export default App;
