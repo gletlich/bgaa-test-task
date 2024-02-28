@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type { Teacher } from "../../types/bgaa.types";
+import type { Teacher } from "@/types/bgaa.types";
 
 export type TeachersState = {
   teachers: Teacher[];

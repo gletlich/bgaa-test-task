@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
-import { getGroupsData, setGroups } from "../../features/groups/groups.slice";
-import { setTeachers } from "../../features/teachers/teachers.slice";
+import { getGroupsData, setGroups } from "@/features/groups/groups.slice";
+import { setTeachers } from "@/features/teachers/teachers.slice";
 
-import { useGetDataQuery } from "../../features/api/bgaa/bgaa.api";
+import { useGetDataQuery } from "@/features/api/bgaa/bgaa.api";
 
 const Groups = () => {
   const { data } = useGetDataQuery();

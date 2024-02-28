@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import type { BgaaResponse } from "../../../types/bgaa.types";
+import type { BgaaResponse } from "@/types/bgaa.types";
 
 export const bgaaApi = createApi({
   reducerPath: "bgaaApi",

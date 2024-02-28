@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState } from "../../store/store";
+import { RootState } from "@/store/store";
 
-import type { Group } from "../../types/bgaa.types";
+import type { Group } from "@/types/bgaa.types";
 
 export type GroupsState = {
   groups: Group[];

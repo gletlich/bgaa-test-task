@@ -2,10 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 
-import groupsReducer from "../features/groups/groups.slice";
-import teachersReducer from "../features/teachers/teachers.slice";
+import groupsReducer from "@/features/groups/groups.slice";
+import teachersReducer from "@/features/teachers/teachers.slice";
 
-import { bgaaApi } from "../features/api/bgaa/bgaa.api";
+import { bgaaApi } from "@/features/api/bgaa/bgaa.api";
 
 export const store = configureStore({
   reducer: {
