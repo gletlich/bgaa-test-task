@@ -17,7 +17,7 @@ const activities: Record<Activity, string> = {
 };
 
 const TableRow = memo((props: TableRowProps) => {
-  const { activity, hours, id, isOnePodgroup } = props;
+  const { activity, hours, groupId, isOnePodgroup } = props;
 
   return (
     <tr className={classes.row}>
@@ -25,7 +25,7 @@ const TableRow = memo((props: TableRowProps) => {
       <td>{hours}</td>
       <td>
         <Select
-          groupId={id}
+          groupId={groupId}
           podgroup={0}
           isDisabled={hours === "0"}
           activity={activity}
@@ -35,7 +35,7 @@ const TableRow = memo((props: TableRowProps) => {
       {!isOnePodgroup && (
         <td>
           <Select
-            groupId={id}
+            groupId={groupId}
             podgroup={1}
             isDisabled={hours === "0"}
             activity={activity}

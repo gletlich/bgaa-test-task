@@ -9,14 +9,14 @@ import {
   setStudentsCount,
 } from "@/features/groups/groups.slice";
 
-import TableRow from "../table-row/table-row.component";
+import PodgroupsCount from "../podgroups-count/podgroups-count.component";
+import Activities from "../activities/activities.component";
 import PlusIcon from "../icons/plus.icon";
 import TrashIcon from "../icons/trash.icon";
 
 import type { HoursTableProps } from "./hours-table.types";
 
 import classes from "./hours-table.module.scss";
-import PodgroupsCount from "../podgroups-count/podgroups-count.component";
 
 const HoursTable = (props: HoursTableProps) => {
   const { group } = props;
@@ -133,47 +133,16 @@ const HoursTable = (props: HoursTableProps) => {
           </tr>
         </thead>
         <tbody>
-          <TableRow
-            activity="lecturesHours"
-            hours={lecturesHours}
-            id={uniqueId}
+          <Activities
+            groupId={uniqueId}
             isOnePodgroup={isOnePodgroup}
+            lecturesHours={lecturesHours}
+            laboratoryHours={laboratoryHours}
+            practicHours={practicHours}
+            seminarHours={seminarHours}
+            offset={offset}
+            exam={exam}
           />
-          <TableRow
-            activity="laboratoryHours"
-            hours={laboratoryHours}
-            id={uniqueId}
-            isOnePodgroup={isOnePodgroup}
-          />
-          <TableRow
-            activity="practicHours"
-            hours={practicHours}
-            id={uniqueId}
-            isOnePodgroup={isOnePodgroup}
-          />
-          <TableRow
-            activity="seminarHours"
-            hours={seminarHours}
-            id={uniqueId}
-            isOnePodgroup={isOnePodgroup}
-          />
-
-          {offset && (
-            <TableRow
-              activity="offset"
-              hours=""
-              id={uniqueId}
-              isOnePodgroup={isOnePodgroup}
-            />
-          )}
-          {exam && (
-            <TableRow
-              activity="exam"
-              hours=""
-              id={uniqueId}
-              isOnePodgroup={isOnePodgroup}
-            />
-          )}
 
           {!isOnePodgroup && (
             <PodgroupsCount
