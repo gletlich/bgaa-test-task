@@ -4,19 +4,18 @@ import { getGroupData } from "@/features/groups/groups.slice";
 
 import Select from "../select/select.component";
 
+import type { Activity } from "@/types/bgaa.types";
 import type { TableRowProps } from "./table-row.types";
-
-import { Activities } from "@/types/activities.enum";
 
 import classes from "./table-row.module.scss";
 
-const activities = {
-  [Activities.Lectures]: "Лекции",
-  [Activities.Laboratory]: "Лабораторные работы",
-  [Activities.Practics]: "Практические",
-  [Activities.Seminars]: "Семинарские",
-  [Activities.Offset]: "Зачёт",
-  [Activities.Exam]: "Экзамен",
+const activities: Record<Activity, string> = {
+  lecturesHours: "Лекции",
+  laboratoryHours: "Лабораторные работы",
+  practicHours: "Практические",
+  seminarHours: "Семинарские",
+  offset: "Зачёт",
+  exam: "Экзамен",
 };
 
 const TableRow = (props: TableRowProps) => {

@@ -13,7 +13,6 @@ import TableRow from "../table-row/table-row.component";
 import PlusIcon from "../icons/plus.icon";
 import TrashIcon from "../icons/trash.icon";
 
-import { Activities } from "@/types/activities.enum";
 import type { HoursTableProps } from "./hours-table.types";
 
 import classes from "./hours-table.module.scss";
@@ -133,32 +132,28 @@ const HoursTable = (props: HoursTableProps) => {
         </thead>
         <tbody>
           <TableRow
-            activity={Activities.Lectures}
+            activity="lecturesHours"
             hours={lecturesHours}
             id={uniqueId}
           />
           <TableRow
-            activity={Activities.Laboratory}
+            activity="laboratoryHours"
             hours={laboratoryHours}
             id={uniqueId}
           />
           <TableRow
-            activity={Activities.Practics}
+            activity="practicHours"
             hours={practicHours}
             id={uniqueId}
           />
           <TableRow
-            activity={Activities.Seminars}
+            activity="seminarHours"
             hours={seminarHours}
             id={uniqueId}
           />
 
-          {offset && (
-            <TableRow activity={Activities.Offset} hours="" id={uniqueId} />
-          )}
-          {exam && (
-            <TableRow activity={Activities.Exam} hours="" id={uniqueId} />
-          )}
+          {offset && <TableRow activity="offset" hours="" id={uniqueId} />}
+          {exam && <TableRow activity="exam" hours="" id={uniqueId} />}
 
           {!isOnePodgroup && (
             <tr className={classes.row}>

@@ -1,7 +1,7 @@
-import { Activities } from "@/types/activities.enum";
+import { Activity } from "@/types/bgaa.types";
 
 export type TableRowProps = {
-  activity: Activities;
+  activity: Activity;
   hours: string;
   id: string;
 };

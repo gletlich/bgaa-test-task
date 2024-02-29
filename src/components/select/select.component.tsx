@@ -12,12 +12,19 @@ import { getTeachers } from "@/features/teachers/teachers.slice";
 
 import SortIcon from "../icons/sort.icon";
 
+import { Activity, TeacherType } from "@/types/bgaa.types";
 import { SelectProps } from "./select.types";
-import { Activities } from "@/types/activities.enum";
 
 import classes from "./select.module.scss";
-import { convertActivityToTeacher } from "@/utils/teachers.utils";
-import { convertActivitiesToActivity } from "@/utils/activities.utils";
+
+const activityToTeacher: Record<Activity, TeacherType> = {
+  lecturesHours: "lectureTeacher",
+  laboratoryHours: "laboratoryTeacher",
+  practicHours: "practiceTeacher",
+  seminarHours: "seminarTeacher",
+  offset: "offsetTeacher",
+  exam: "examTeacher",
+};
 
 const Select = (props: SelectProps) => {
   const { groupId, podgroup, activity, hours } = props;
@@ -25,7 +32,7 @@ const Select = (props: SelectProps) => {
   const dispatch = useDispatch();
 
   const teacher = useAppSelector(
-    getTeacherId(groupId, podgroup, convertActivityToTeacher(activity))
+    getTeacherId(groupId, podgroup, activityToTeacher[activity])
   );
   const teachers = useAppSelector(getTeachers);
 
@@ -41,7 +48,7 @@ const Select = (props: SelectProps) => {
 
   return (
     <>
-      {activity === Activities.Lectures ? (
+      {activity === "lecturesHours" ? (
         <div className={classes.lections}>
           <ReactSelect
             options={options}
@@ -55,8 +62,8 @@ const Select = (props: SelectProps) => {
                   groupId,
                   teacherId: chosenTeacher?.value || "",
                   podgroup,
-                  activity: convertActivitiesToActivity(activity),
-                  teacher: convertActivityToTeacher(activity),
+                  activity: activity,
+                  teacher: activityToTeacher[activity],
                 })
               );
             }}
@@ -89,8 +96,8 @@ const Select = (props: SelectProps) => {
                 groupId,
                 teacherId: chosenTeacher?.value || "",
                 podgroup,
-                activity: convertActivitiesToActivity(activity),
-                teacher: convertActivityToTeacher(activity),
+                activity: activity,
+                teacher: activityToTeacher[activity],
               })
             );
           }}

@@ -1,8 +1,8 @@
-import { Activities } from "@/types/activities.enum";
+import { Activity } from "@/types/bgaa.types";
 
 export type SelectProps = {
   groupId: string;
   podgroup: number;
   hours: string;
-  activity: Activities;
+  activity: Activity;
 };
