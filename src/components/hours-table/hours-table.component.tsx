@@ -1,8 +1,6 @@
-import Select from "react-select";
+import { useState } from "react";
 
-import { useAppSelector } from "@/store/store";
-
-import { getTeachers } from "@/features/teachers/teachers.slice";
+import TableRow from "../table-row/table-row.component";
 
 import type { HoursTableProps } from "./hours-table.types";
 
@@ -11,14 +9,17 @@ import classes from "./hours-table.module.scss";
 const HoursTable = (props: HoursTableProps) => {
   const { group } = props;
 
-  const { lecturesHours, laboratoryHours, practicHours, seminarHours } = group;
+  const {
+    lecturesHours,
+    laboratoryHours,
+    practicHours,
+    seminarHours,
+    offset,
+    exam,
+    additionalInfo,
+  } = group;
 
-  const teachers = useAppSelector(getTeachers);
-
-  const options = [
-    { value: "", label: "Вакансия" },
-    ...teachers.map((teacher) => ({ value: teacher.id, label: teacher.name })),
-  ];
+  const [note, setNote] = useState(additionalInfo);
 
   return (
     <div className={classes.tableContainer}>
@@ -31,51 +32,26 @@ const HoursTable = (props: HoursTableProps) => {
           </tr>
         </thead>
         <tbody>
-          <tr className={classes.bodyRow}>
-            <td>Лекции</td>
-            <td>{lecturesHours}</td>
+          <TableRow activity="Лекции" hours={lecturesHours} />
+          <TableRow activity="Лабораторные работы" hours={laboratoryHours} />
+          <TableRow activity="Практические" hours={practicHours} />
+          <TableRow activity="Семинарские" hours={seminarHours} />
+
+          {offset && <TableRow activity="Зачёт" hours="" />}
+          {exam && <TableRow activity="Экзамен" hours="" />}
+
+          <tr className={classes.row}>
             <td>
-              <Select
-                options={options}
-                menuPortalTarget={document.body}
-                menuPosition={"fixed"}
-                menuPlacement="auto"
-              />
+              Примечание
+              <br />
+              (для составления расписания)
             </td>
-          </tr>
-          <tr className={classes.bodyRow}>
-            <td>Лабораторные работы</td>
-            <td>{laboratoryHours}</td>
+            <td></td>
             <td>
-              <Select
-                options={options}
-                menuPortalTarget={document.body}
-                menuPosition={"fixed"}
-                menuPlacement="auto"
-              />
-            </td>
-          </tr>
-          <tr className={classes.bodyRow}>
-            <td>Практические</td>
-            <td>{practicHours}</td>
-            <td>
-              <Select
-                options={options}
-                menuPortalTarget={document.body}
-                menuPosition={"fixed"}
-                menuPlacement="auto"
-              />
-            </td>
-          </tr>
-          <tr className={classes.bodyRow}>
-            <td>Семинарские</td>
-            <td>{seminarHours}</td>
-            <td>
-              <Select
-                options={options}
-                menuPortalTarget={document.body}
-                menuPosition={"fixed"}
-                menuPlacement="auto"
+              <textarea
+                rows={3}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
               />
             </td>
           </tr>

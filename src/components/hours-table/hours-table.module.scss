@@ -19,7 +19,7 @@
   border: 1px solid black;
 }
 
-.bodyRow td {
+.row td {
   padding: 8px;
 
   border: 1px solid black;
@@ -36,5 +36,13 @@
 
   &:nth-child(3) {
     min-width: 300px;
+  }
+
+  & textarea {
+    width: 100%;
+
+    resize: vertical;
+
+    padding: 8px;
   }
 }
