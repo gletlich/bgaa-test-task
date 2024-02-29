@@ -1,12 +1,13 @@
+import { memo } from "react";
+
 import { GroupInfoProps } from "./group-info.types";
 
 import classes from "./group-info.module.scss";
 
-const GroupInfo = (props: GroupInfoProps) => {
-  const { groupInfo } = props;
-  const { groupName, course, studentsNumber, semestr } = groupInfo;
+const GroupInfo = memo((props: GroupInfoProps) => {
+  const { groupName, course, studentsNumber, semestr } = props;
 
-  const info = [
+  const groupInfo = [
     {
       label: "Группа",
       value: groupName,
@@ -27,16 +28,16 @@ const GroupInfo = (props: GroupInfoProps) => {
 
   return (
     <div className={classes.groupInfo}>
-      {info.map((i) => {
+      {groupInfo.map((info) => {
         return (
-          <div key={i.label} className={classes.record}>
-            <div>{i.label}</div>
-            <div>{i.value}</div>
+          <div key={info.label} className={classes.info}>
+            <div>{info.label}</div>
+            <div>{info.value}</div>
           </div>
         );
       })}
     </div>
   );
-};
+});
 
 export default GroupInfo;

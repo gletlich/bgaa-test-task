@@ -11,7 +11,7 @@ import classes from "./card.module.scss";
 const Card = memo((props: CardProps) => {
   const { group } = props;
 
-  const { subjectName } = group;
+  const { subjectName, groupName, course, semestr, studentsNumber } = group;
 
   return (
     <div className={classes.card}>
@@ -22,7 +22,12 @@ const Card = memo((props: CardProps) => {
         <h2>{subjectName}</h2>
       </div>
 
-      <GroupInfo groupInfo={group} />
+      <GroupInfo
+        course={course}
+        semestr={semestr}
+        groupName={groupName}
+        studentsNumber={studentsNumber}
+      />
 
       <HoursTable group={group} />
     </div>
