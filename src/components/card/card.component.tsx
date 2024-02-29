@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import HoursTable from "../hours-table/hours-table.component";
 import GroupInfo from "../group-info/group-info.component";
 import BookIcon from "../icons/book.icon";
@@ -6,7 +8,7 @@ import type { CardProps } from "./card.types";
 
 import classes from "./card.module.scss";
 
-const Card = (props: CardProps) => {
+const Card = memo((props: CardProps) => {
   const { group } = props;
 
   const { subjectName } = group;
@@ -25,6 +27,6 @@ const Card = (props: CardProps) => {
       <HoursTable group={group} />
     </div>
   );
-};
+});
 
 export default Card;
