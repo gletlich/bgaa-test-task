@@ -4,4 +4,5 @@ export type TableRowProps = {
   activity: Activity;
   hours: string;
   id: string;
+  isOnePodgroup: boolean;
 };

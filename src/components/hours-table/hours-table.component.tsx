@@ -21,6 +21,8 @@ const HoursTable = (props: HoursTableProps) => {
   const { group } = props;
 
   const {
+    uniqueId,
+    studentsNumber,
     lecturesHours,
     laboratoryHours,
     practicHours,
@@ -28,8 +30,7 @@ const HoursTable = (props: HoursTableProps) => {
     offset,
     exam,
     additionalInfo,
-    uniqueId,
-    studentsNumber,
+    podgroups,
   } = group;
 
   const dispatch = useAppDispatch();
@@ -37,13 +38,13 @@ const HoursTable = (props: HoursTableProps) => {
   const [isEditingFirstPodgroup, setIsEditingFirstPodgroup] = useState(false);
   const [isEditingSecondPodgroup, setIsEditingSecondPodgroup] = useState(false);
   const [firstPodgroupCount, setFirstPodgroupCount] = useState(
-    Number(group.podgroups[0]?.countStudents)
+    Number(podgroups[0]?.countStudents)
   );
   const [secondPodgroupCount, setSecondPodgroupCount] = useState(
-    Number(group.podgroups[1]?.countStudents)
+    Number(podgroups[1]?.countStudents)
   );
 
-  const isOnePodgroup = group.podgroups.length === 1;
+  const isOnePodgroup = podgroups.length === 1;
 
   const addPodgroup = () => {
     dispatch(createPodgroup(uniqueId));
@@ -88,8 +89,8 @@ const HoursTable = (props: HoursTableProps) => {
     const newCount = podgroup === 0 ? firstPodgroupCount : secondPodgroupCount;
 
     if (newCount < 0 || newCount > Number(studentsNumber)) {
-      setFirstPodgroupCount(Number(group.podgroups[0].countStudents));
-      setSecondPodgroupCount(Number(group.podgroups[1].countStudents));
+      setFirstPodgroupCount(Number(podgroups[0].countStudents));
+      setSecondPodgroupCount(Number(podgroups[1].countStudents));
 
       return;
     }
@@ -135,25 +136,43 @@ const HoursTable = (props: HoursTableProps) => {
             activity="lecturesHours"
             hours={lecturesHours}
             id={uniqueId}
+            isOnePodgroup={isOnePodgroup}
           />
           <TableRow
             activity="laboratoryHours"
             hours={laboratoryHours}
             id={uniqueId}
+            isOnePodgroup={isOnePodgroup}
           />
           <TableRow
             activity="practicHours"
             hours={practicHours}
             id={uniqueId}
+            isOnePodgroup={isOnePodgroup}
           />
           <TableRow
             activity="seminarHours"
             hours={seminarHours}
             id={uniqueId}
+            isOnePodgroup={isOnePodgroup}
           />
 
-          {offset && <TableRow activity="offset" hours="" id={uniqueId} />}
-          {exam && <TableRow activity="exam" hours="" id={uniqueId} />}
+          {offset && (
+            <TableRow
+              activity="offset"
+              hours=""
+              id={uniqueId}
+              isOnePodgroup={isOnePodgroup}
+            />
+          )}
+          {exam && (
+            <TableRow
+              activity="exam"
+              hours=""
+              id={uniqueId}
+              isOnePodgroup={isOnePodgroup}
+            />
+          )}
 
           {!isOnePodgroup && (
             <tr className={classes.row}>
@@ -171,7 +190,7 @@ const HoursTable = (props: HoursTableProps) => {
                   />
                 ) : (
                   <div className={classes.count}>
-                    {group.podgroups[0].countStudents}
+                    {podgroups[0].countStudents}
                   </div>
                 )}
               </td>
@@ -187,7 +206,7 @@ const HoursTable = (props: HoursTableProps) => {
                   />
                 ) : (
                   <div className={classes.count}>
-                    {group.podgroups[1].countStudents}
+                    {podgroups[1].countStudents}
                   </div>
                 )}
               </td>

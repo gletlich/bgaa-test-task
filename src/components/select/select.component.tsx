@@ -27,7 +27,7 @@ const activityToTeacher: Record<Activity, TeacherType> = {
 };
 
 const Select = (props: SelectProps) => {
-  const { groupId, podgroup, activity, hours } = props;
+  const { groupId, podgroup, activity, isDisabled } = props;
 
   const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const Select = (props: SelectProps) => {
             value={chosenOption}
             menuPortalTarget={document.body}
             menuPosition="fixed"
-            isDisabled={hours === "0"}
+            isDisabled={isDisabled}
             onChange={(chosenTeacher) => {
               dispatch(
                 assignTeacherToActivity({
@@ -89,7 +89,7 @@ const Select = (props: SelectProps) => {
           value={chosenOption}
           menuPortalTarget={document.body}
           menuPosition="fixed"
-          isDisabled={hours === "0"}
+          isDisabled={isDisabled}
           onChange={(chosenTeacher) => {
             dispatch(
               assignTeacherToActivity({
