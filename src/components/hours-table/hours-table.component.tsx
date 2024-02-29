@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useAppDispatch } from "@/store/store";
 
@@ -6,6 +6,7 @@ import {
   createPodgroup,
   deletePodgroup,
   setAdditionalInfo,
+  setStudentsCount,
 } from "@/features/groups/groups.slice";
 
 import TableRow from "../table-row/table-row.component";
@@ -29,24 +30,79 @@ const HoursTable = (props: HoursTableProps) => {
     exam,
     additionalInfo,
     uniqueId,
+    studentsNumber,
   } = group;
 
   const dispatch = useAppDispatch();
+
+  const [isEditingFirstPodgroup, setIsEditingFirstPodgroup] = useState(false);
+  const [isEditingSecondPodgroup, setIsEditingSecondPodgroup] = useState(false);
+  const [firstPodgroupCount, setFirstPodgroupCount] = useState(
+    Number(group.podgroups[0]?.countStudents)
+  );
+  const [secondPodgroupCount, setSecondPodgroupCount] = useState(
+    Number(group.podgroups[1]?.countStudents)
+  );
 
   const isOnePodgroup = group.podgroups.length === 1;
 
   const addPodgroup = () => {
     dispatch(createPodgroup(uniqueId));
+
+    const count = Math.ceil(Number(studentsNumber) / 2);
+    setFirstPodgroupCount(count);
+    setSecondPodgroupCount(Number(studentsNumber) - count);
   };
 
   const removePodgroup = () => {
     dispatch(deletePodgroup(uniqueId));
+
+    setFirstPodgroupCount(Number(studentsNumber));
+    setSecondPodgroupCount(0);
   };
 
   const changeAdditionalInfo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(
       setAdditionalInfo({ groupId: uniqueId, additionalInfo: e.target.value })
     );
+  };
+
+  const handleStudentsCountChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    podgroup: number
+  ) => {
+    const newCount = Number(e.target.value);
+
+    if (podgroup === 0) {
+      setFirstPodgroupCount(newCount);
+      setSecondPodgroupCount(Number(studentsNumber) - newCount);
+    } else {
+      setFirstPodgroupCount(Number(studentsNumber) - newCount);
+      setSecondPodgroupCount(newCount);
+    }
+  };
+
+  const handleStudentsCountSave = (podgroup: number) => {
+    setIsEditingFirstPodgroup(false);
+    setIsEditingSecondPodgroup(false);
+
+    const newCount = podgroup === 0 ? firstPodgroupCount : secondPodgroupCount;
+
+    if (newCount < 0 || newCount > Number(studentsNumber)) {
+      setFirstPodgroupCount(Number(group.podgroups[0].countStudents));
+      setSecondPodgroupCount(Number(group.podgroups[1].countStudents));
+
+      return;
+    }
+
+    const count: [number, number] = [
+      newCount,
+      Number(studentsNumber) - newCount,
+    ];
+
+    if (podgroup === 1) count.reverse();
+
+    dispatch(setStudentsCount({ groupId: uniqueId, count }));
   };
 
   return (
@@ -108,8 +164,38 @@ const HoursTable = (props: HoursTableProps) => {
             <tr className={classes.row}>
               <td>Количество человек</td>
               <td></td>
-              <td>{group.podgroups[0].countStudents}</td>
-              <td>{group.podgroups[1].countStudents}</td>
+              <td onClick={() => setIsEditingFirstPodgroup(true)}>
+                {isEditingFirstPodgroup ? (
+                  <input
+                    type="number"
+                    onBlur={() => handleStudentsCountSave(0)}
+                    value={firstPodgroupCount}
+                    autoFocus
+                    onChange={(e) => handleStudentsCountChange(e, 0)}
+                    className={classes.countInput}
+                  />
+                ) : (
+                  <div className={classes.count}>
+                    {group.podgroups[0].countStudents}
+                  </div>
+                )}
+              </td>
+              <td onClick={() => setIsEditingSecondPodgroup(true)}>
+                {isEditingSecondPodgroup ? (
+                  <input
+                    type="number"
+                    onBlur={() => handleStudentsCountSave(1)}
+                    value={secondPodgroupCount}
+                    autoFocus
+                    onChange={(e) => handleStudentsCountChange(e, 1)}
+                    className={classes.countInput}
+                  />
+                ) : (
+                  <div className={classes.count}>
+                    {group.podgroups[1].countStudents}
+                  </div>
+                )}
+              </td>
             </tr>
           )}
 

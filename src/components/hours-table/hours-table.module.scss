@@ -65,3 +65,21 @@
     padding: 8px;
   }
 }
+
+.count {
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.countInput {
+  outline: none;
+
+  padding: 8px;
+
+  width: 100%;
+}

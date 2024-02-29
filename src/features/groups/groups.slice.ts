@@ -8,6 +8,7 @@ import type {
   AdditionalInfo,
   Group,
   PodgroupTeacher,
+  StudentsCount,
   TeacherType,
 } from "@/types/bgaa.types";
 
@@ -119,6 +120,16 @@ export const groupsSlice = createSlice({
 
       group.additionalInfo = additionalInfo;
     },
+    setStudentsCount: (state, action: PayloadAction<StudentsCount>) => {
+      const { groupId, count } = action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === groupId);
+
+      if (!group) return;
+
+      group.podgroups[0].countStudents = count[0].toString();
+      group.podgroups[1].countStudents = count[1].toString();
+    },
   },
 });
 
@@ -129,6 +140,7 @@ export const {
   assignTeacherToActivity,
   assignTeacherToPodgroup,
   setAdditionalInfo,
+  setStudentsCount,
 } = groupsSlice.actions;
 
 export const getGroupsData = (state: RootState) => state.groups.groups;

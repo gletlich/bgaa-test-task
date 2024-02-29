@@ -70,3 +70,8 @@ export type AdditionalInfo = {
   groupId: string;
   additionalInfo: string;
 };
+
+export type StudentsCount = {
+  groupId: string;
+  count: [number, number];
+};
