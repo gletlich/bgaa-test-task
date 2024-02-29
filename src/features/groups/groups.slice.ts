@@ -27,4 +27,8 @@ export const { setGroups } = groupsSlice.actions;
 
 export const getGroupsData = (state: RootState) => state.groups.groups;
 
+export const getGroupData = (id: string) => (state: RootState) => {
+  return state.groups.groups.find((group) => group.uniqueId === id);
+};
+
 export default groupsSlice.reducer;
