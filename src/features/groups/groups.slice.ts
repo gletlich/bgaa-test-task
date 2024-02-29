@@ -5,6 +5,7 @@ import { RootState } from "@/store/store";
 
 import type {
   ActivityTeacher,
+  AdditionalInfo,
   Group,
   PodgroupTeacher,
   TeacherType,
@@ -109,6 +110,15 @@ export const groupsSlice = createSlice({
         group.podgroups[podgroup].examTeacher = teacherId;
       }
     },
+    setAdditionalInfo: (state, action: PayloadAction<AdditionalInfo>) => {
+      const { groupId, additionalInfo } = action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === groupId);
+
+      if (!group) return;
+
+      group.additionalInfo = additionalInfo;
+    },
   },
 });
 
@@ -118,6 +128,7 @@ export const {
   deletePodgroup,
   assignTeacherToActivity,
   assignTeacherToPodgroup,
+  setAdditionalInfo,
 } = groupsSlice.actions;
 
 export const getGroupsData = (state: RootState) => state.groups.groups;
@@ -133,5 +144,11 @@ export const getTeacherId =
 
     return group?.podgroups[podgroup]?.[teacher];
   };
+
+export const getAdditionalInfo = (id: string) => (state: RootState) => {
+  const group = state.groups.groups.find((group) => group.uniqueId === id);
+
+  return group?.additionalInfo;
+};
 
 export default groupsSlice.reducer;

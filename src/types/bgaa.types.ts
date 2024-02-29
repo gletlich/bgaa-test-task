@@ -65,3 +65,8 @@ export type PodgroupTeacher = {
   podgroup: number;
   teacherId: string;
 };
+
+export type AdditionalInfo = {
+  groupId: string;
+  additionalInfo: string;
+};

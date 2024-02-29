@@ -1,8 +1,12 @@
-import { useState } from "react";
+import React from "react";
 
 import { useAppDispatch } from "@/store/store";
 
-import { createPodgroup, deletePodgroup } from "@/features/groups/groups.slice";
+import {
+  createPodgroup,
+  deletePodgroup,
+  setAdditionalInfo,
+} from "@/features/groups/groups.slice";
 
 import TableRow from "../table-row/table-row.component";
 import PlusIcon from "../icons/plus.icon";
@@ -27,8 +31,6 @@ const HoursTable = (props: HoursTableProps) => {
     uniqueId,
   } = group;
 
-  const [note, setNote] = useState(additionalInfo);
-
   const dispatch = useAppDispatch();
 
   const isOnePodgroup = group.podgroups.length === 1;
@@ -39,6 +41,12 @@ const HoursTable = (props: HoursTableProps) => {
 
   const removePodgroup = () => {
     dispatch(deletePodgroup(uniqueId));
+  };
+
+  const changeAdditionalInfo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(
+      setAdditionalInfo({ groupId: uniqueId, additionalInfo: e.target.value })
+    );
   };
 
   return (
@@ -115,8 +123,8 @@ const HoursTable = (props: HoursTableProps) => {
             <td colSpan={2}>
               <textarea
                 rows={3}
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
+                value={additionalInfo}
+                onChange={changeAdditionalInfo}
               />
             </td>
           </tr>
