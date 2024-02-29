@@ -20,10 +20,46 @@ export const groupsSlice = createSlice({
     setGroups: (state, action: PayloadAction<Group[]>) => {
       state.groups = action.payload;
     },
+    createPodgroup: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === id);
+
+      if (!group) return;
+
+      const firstPodgroupStudents = Math.ceil(
+        Number(group.podgroups[0].countStudents) / 2
+      );
+      const secondPodgroupStudents =
+        Number(group.podgroups[0].countStudents) - firstPodgroupStudents;
+
+      group.podgroups[0].countStudents = firstPodgroupStudents.toString();
+
+      group.podgroups[1] = {
+        countStudents: secondPodgroupStudents.toString(),
+        laboratoryTeacher: "",
+        lectureTeacher: "",
+        practiceTeacher: "",
+        seminarTeacher: "",
+        examTeacher: "",
+        offsetTeacher: "",
+      };
+    },
+    deletePodgroup: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === id);
+
+      if (!group) return;
+
+      group.podgroups[0].countStudents = group.studentsNumber;
+      group.podgroups.pop();
+    },
   },
 });
 
-export const { setGroups } = groupsSlice.actions;
+export const { setGroups, createPodgroup, deletePodgroup } =
+  groupsSlice.actions;
 
 export const getGroupsData = (state: RootState) => state.groups.groups;
 

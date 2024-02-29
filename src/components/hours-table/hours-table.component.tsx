@@ -1,6 +1,12 @@
 import { useState } from "react";
 
+import { useAppDispatch } from "@/store/store";
+
+import { createPodgroup, deletePodgroup } from "@/features/groups/groups.slice";
+
 import TableRow from "../table-row/table-row.component";
+import PlusIcon from "../icons/plus.icon";
+import TrashIcon from "../icons/trash.icon";
 
 import type { HoursTableProps } from "./hours-table.types";
 
@@ -22,7 +28,17 @@ const HoursTable = (props: HoursTableProps) => {
 
   const [note, setNote] = useState(additionalInfo);
 
+  const dispatch = useAppDispatch();
+
   const isOnePodgroup = group.podgroups.length === 1;
+
+  const addPodgroup = () => {
+    dispatch(createPodgroup(uniqueId));
+  };
+
+  const removePodgroup = () => {
+    dispatch(deletePodgroup(uniqueId));
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -33,11 +49,19 @@ const HoursTable = (props: HoursTableProps) => {
             <th>Часы</th>
 
             {isOnePodgroup ? (
-              <th>Преподаватель</th>
+              <th>
+                <div className={classes.column} onClick={addPodgroup}>
+                  Преподаватель <PlusIcon />
+                </div>
+              </th>
             ) : (
               <>
                 <th>Подгруппа 1</th>
-                <th>Подгруппа 2</th>
+                <th>
+                  <div className={classes.column} onClick={removePodgroup}>
+                    Подгруппа 2 <TrashIcon />
+                  </div>
+                </th>
               </>
             )}
           </tr>
