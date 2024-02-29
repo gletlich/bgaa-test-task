@@ -1,70 +1,44 @@
-import Select from "react-select";
-
 import { useAppSelector } from "@/store/store";
 
 import { getGroupData } from "@/features/groups/groups.slice";
-import { getTeachers } from "@/features/teachers/teachers.slice";
 
-import SortIcon from "../icons/sort.icon";
+import Select from "../select/select.component";
 
 import type { TableRowProps } from "./table-row.types";
 
+import { Activities } from "@/types/activities.enum";
+
 import classes from "./table-row.module.scss";
+
+const activities = {
+  [Activities.Lectures]: "Лекции",
+  [Activities.Laboratory]: "Лабораторные работы",
+  [Activities.Practics]: "Практические",
+  [Activities.Seminars]: "Семинарские",
+  [Activities.Offset]: "Зачёт",
+  [Activities.Exam]: "Экзамен",
+};
 
 const TableRow = (props: TableRowProps) => {
   const { activity, hours, id } = props;
 
   const group = useAppSelector(getGroupData(id));
-  const teachers = useAppSelector(getTeachers);
-
-  const options = [
-    { value: "", label: "Вакансия" },
-    ...teachers.map((teacher) => ({ value: teacher.id, label: teacher.name })),
-  ];
 
   if (!group) return <tr></tr>;
 
   const isOnePodgroup = group.podgroups.length === 1;
 
-  const select = (
-    <Select
-      options={options}
-      defaultValue={options[0]}
-      menuPortalTarget={document.body}
-      menuPosition={"fixed"}
-      isDisabled={hours === "0"}
-    />
-  );
-
   return (
     <tr className={classes.row}>
-      <td>{activity}</td>
+      <td>{activities[activity]}</td>
       <td>{hours}</td>
       <td>
-        {activity === "Лекции" ? (
-          <div className={classes.lections}>
-            {select}
-            <button className={classes.sortBtn}>
-              <SortIcon />
-            </button>
-          </div>
-        ) : (
-          select
-        )}
+        <Select groupId={id} podgroup={0} hours={hours} activity={activity} />
       </td>
 
       {!isOnePodgroup && (
         <td>
-          {activity === "Лекции" ? (
-            <div className={classes.lections}>
-              {select}
-              <button className={classes.sortBtn}>
-                <SortIcon />
-              </button>
-            </div>
-          ) : (
-            select
-          )}
+          <Select groupId={id} podgroup={1} hours={hours} activity={activity} />
         </td>
       )}
     </tr>

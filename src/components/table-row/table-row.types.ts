@@ -1,5 +1,7 @@
+import { Activities } from "@/types/activities.enum";
+
 export type TableRowProps = {
-  activity: string;
+  activity: Activities;
   hours: string;
   id: string;
 };

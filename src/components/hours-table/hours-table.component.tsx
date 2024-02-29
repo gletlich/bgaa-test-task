@@ -8,6 +8,7 @@ import TableRow from "../table-row/table-row.component";
 import PlusIcon from "../icons/plus.icon";
 import TrashIcon from "../icons/trash.icon";
 
+import { Activities } from "@/types/activities.enum";
 import type { HoursTableProps } from "./hours-table.types";
 
 import classes from "./hours-table.module.scss";
@@ -67,21 +68,33 @@ const HoursTable = (props: HoursTableProps) => {
           </tr>
         </thead>
         <tbody>
-          <TableRow activity="Лекции" hours={lecturesHours} id={uniqueId} />
           <TableRow
-            activity="Лабораторные работы"
+            activity={Activities.Lectures}
+            hours={lecturesHours}
+            id={uniqueId}
+          />
+          <TableRow
+            activity={Activities.Laboratory}
             hours={laboratoryHours}
             id={uniqueId}
           />
           <TableRow
-            activity="Практические"
+            activity={Activities.Practics}
             hours={practicHours}
             id={uniqueId}
           />
-          <TableRow activity="Семинарские" hours={seminarHours} id={uniqueId} />
+          <TableRow
+            activity={Activities.Seminars}
+            hours={seminarHours}
+            id={uniqueId}
+          />
 
-          {offset && <TableRow activity="Зачёт" hours="" id={uniqueId} />}
-          {exam && <TableRow activity="Экзамен" hours="" id={uniqueId} />}
+          {offset && (
+            <TableRow activity={Activities.Offset} hours="" id={uniqueId} />
+          )}
+          {exam && (
+            <TableRow activity={Activities.Exam} hours="" id={uniqueId} />
+          )}
 
           {!isOnePodgroup && (
             <tr className={classes.row}>

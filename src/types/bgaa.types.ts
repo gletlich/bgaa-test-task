@@ -35,3 +35,33 @@ export type BgaaResponse = {
   data: Group[];
   teachers: Teacher[];
 };
+
+export type Activity =
+  | "lecturesHours"
+  | "laboratoryHours"
+  | "practicHours"
+  | "seminarHours"
+  | "offset"
+  | "exam";
+
+export type TeacherType =
+  | "lectureTeacher"
+  | "laboratoryTeacher"
+  | "practiceTeacher"
+  | "seminarTeacher"
+  | "offsetTeacher"
+  | "examTeacher";
+
+export type ActivityTeacher = {
+  groupId: string;
+  podgroup: number;
+  teacherId: string;
+  activity: Activity;
+  teacher: TeacherType;
+};
+
+export type PodgroupTeacher = {
+  groupId: string;
+  podgroup: number;
+  teacherId: string;
+};

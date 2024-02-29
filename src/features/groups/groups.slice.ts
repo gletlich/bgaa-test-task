@@ -3,7 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "@/store/store";
 
-import type { Group } from "@/types/bgaa.types";
+import type {
+  ActivityTeacher,
+  Group,
+  PodgroupTeacher,
+  TeacherType,
+} from "@/types/bgaa.types";
 
 export type GroupsState = {
   groups: Group[];
@@ -55,16 +60,78 @@ export const groupsSlice = createSlice({
       group.podgroups[0].countStudents = group.studentsNumber;
       group.podgroups.pop();
     },
+    assignTeacherToActivity: (
+      state,
+      action: PayloadAction<ActivityTeacher>
+    ) => {
+      const { groupId, podgroup, teacherId, activity, teacher } =
+        action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === groupId);
+
+      if (!group) return;
+
+      if (group[activity] !== "0") {
+        group.podgroups[podgroup][teacher] = teacherId;
+      }
+    },
+    assignTeacherToPodgroup: (
+      state,
+      action: PayloadAction<PodgroupTeacher>
+    ) => {
+      const { groupId, teacherId, podgroup } = action.payload;
+
+      const group = state.groups.find((group) => group.uniqueId === groupId);
+
+      if (!group) return;
+
+      if (group.lecturesHours !== "0") {
+        group.podgroups[podgroup].lectureTeacher = teacherId;
+      }
+
+      if (group.laboratoryHours !== "0") {
+        group.podgroups[podgroup].laboratoryTeacher = teacherId;
+      }
+
+      if (group.practicHours !== "0") {
+        group.podgroups[podgroup].practiceTeacher = teacherId;
+      }
+
+      if (group.seminarHours !== "0") {
+        group.podgroups[podgroup].seminarTeacher = teacherId;
+      }
+
+      if (group.offset) {
+        group.podgroups[podgroup].offsetTeacher = teacherId;
+      }
+
+      if (group.exam) {
+        group.podgroups[podgroup].examTeacher = teacherId;
+      }
+    },
   },
 });
 
-export const { setGroups, createPodgroup, deletePodgroup } =
-  groupsSlice.actions;
+export const {
+  setGroups,
+  createPodgroup,
+  deletePodgroup,
+  assignTeacherToActivity,
+  assignTeacherToPodgroup,
+} = groupsSlice.actions;
 
 export const getGroupsData = (state: RootState) => state.groups.groups;
 
 export const getGroupData = (id: string) => (state: RootState) => {
   return state.groups.groups.find((group) => group.uniqueId === id);
 };
+
+export const getTeacherId =
+  (id: string, podgroup: number, teacher: TeacherType) =>
+  (state: RootState) => {
+    const group = state.groups.groups.find((group) => group.uniqueId === id);
+
+    return group?.podgroups[podgroup]?.[teacher];
+  };
 
 export default groupsSlice.reducer;
