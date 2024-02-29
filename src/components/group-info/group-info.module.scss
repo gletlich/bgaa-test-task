@@ -1,0 +1,48 @@
+.groupInfo {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 8px;
+
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+
+  padding: 10px 0px;
+
+  $children: 1, 2, 3, 4;
+
+  @each $child in $children {
+    & > div:nth-child(#{$child}) {
+      order: $child;
+    }
+  }
+
+  & > div:nth-child(3) {
+    order: 5;
+  }
+
+  @container (min-width: 450px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    & > div:nth-child(3) {
+      order: 3;
+    }
+  }
+}
+
+.record {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  & > div:nth-child(1) {
+    font-weight: 600;
+    color: #303a65;
+  }
+
+  & > div:nth-child(2) {
+    min-width: 45px;
+    width: 25%;
+  }
+}

@@ -1,0 +1,47 @@
+.card {
+  padding: 8px;
+
+  border: 2px solid gray;
+  border-radius: 6px;
+
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.subject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #303a65;
+
+  padding: 16px;
+
+  background-color: #e7f1ff;
+
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+
+  & > div {
+    width: 16px;
+    height: 16px;
+
+    margin-top: 1px;
+
+    align-self: flex-start;
+
+    & > svg {
+      width: 16px;
+      height: 16px;
+
+      fill: #303a65;
+    }
+  }
+
+  & > h2 {
+    font-weight: 700;
+    font-size: 16px;
+  }
+}

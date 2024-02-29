@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+import type { RootState } from "@/store/store";
 import type { Teacher } from "@/types/bgaa.types";
 
 export type TeachersState = {
@@ -22,5 +23,7 @@ export const teachersSlice = createSlice({
 });
 
 export const { setTeachers } = teachersSlice.actions;
+
+export const getTeachers = (state: RootState) => state.teachers.teachers;
 
 export default teachersSlice.reducer;

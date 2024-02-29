@@ -1,0 +1,40 @@
+.tableContainer {
+  margin-top: 10px;
+
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.headRow th {
+  padding: 8px;
+
+  border: 1px solid black;
+}
+
+.bodyRow td {
+  padding: 8px;
+
+  border: 1px solid black;
+
+  text-align: center;
+
+  &:nth-child(1) {
+    width: 250px;
+  }
+
+  &:nth-child(2) {
+    width: 80px;
+  }
+
+  &:nth-child(3) {
+    min-width: 300px;
+  }
+}

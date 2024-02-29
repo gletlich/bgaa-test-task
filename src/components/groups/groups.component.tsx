@@ -7,6 +7,10 @@ import { setTeachers } from "@/features/teachers/teachers.slice";
 
 import { useGetDataQuery } from "@/features/api/bgaa/bgaa.api";
 
+import Card from "../card/card.component";
+
+import classes from "./groups.module.scss";
+
 const Groups = () => {
   const { data } = useGetDataQuery();
 
@@ -22,9 +26,9 @@ const Groups = () => {
   }, [data, dispatch]);
 
   return (
-    <div>
+    <div className={classes.groups}>
       {groups.map((group) => {
-        return <div key={group.uniqueId}>{group.groupName}</div>;
+        return <Card key={group.uniqueId} group={group} />;
       })}
     </div>
   );
