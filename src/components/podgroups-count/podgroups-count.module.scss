@@ -1,0 +1,43 @@
+.row td {
+  padding: 8px;
+
+  background-color: aliceblue;
+
+  border: 1px solid lightgray;
+
+  text-align: center;
+
+  &:nth-child(1) {
+    width: 250px;
+  }
+
+  &:nth-child(2) {
+    width: 80px;
+  }
+
+  & textarea {
+    width: 100%;
+
+    resize: vertical;
+
+    padding: 8px;
+  }
+}
+
+.count {
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.countInput {
+  outline: none;
+
+  padding: 8px;
+
+  width: 100%;
+}

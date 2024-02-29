@@ -16,6 +16,7 @@ import TrashIcon from "../icons/trash.icon";
 import type { HoursTableProps } from "./hours-table.types";
 
 import classes from "./hours-table.module.scss";
+import PodgroupsCount from "../podgroups-count/podgroups-count.component";
 
 const HoursTable = (props: HoursTableProps) => {
   const { group } = props;
@@ -175,42 +176,17 @@ const HoursTable = (props: HoursTableProps) => {
           )}
 
           {!isOnePodgroup && (
-            <tr className={classes.row}>
-              <td>Количество человек</td>
-              <td></td>
-              <td onClick={() => setIsEditingFirstPodgroup(true)}>
-                {isEditingFirstPodgroup ? (
-                  <input
-                    type="number"
-                    onBlur={() => handleStudentsCountSave(0)}
-                    value={firstPodgroupCount}
-                    autoFocus
-                    onChange={(e) => handleStudentsCountChange(e, 0)}
-                    className={classes.countInput}
-                  />
-                ) : (
-                  <div className={classes.count}>
-                    {podgroups[0].countStudents}
-                  </div>
-                )}
-              </td>
-              <td onClick={() => setIsEditingSecondPodgroup(true)}>
-                {isEditingSecondPodgroup ? (
-                  <input
-                    type="number"
-                    onBlur={() => handleStudentsCountSave(1)}
-                    value={secondPodgroupCount}
-                    autoFocus
-                    onChange={(e) => handleStudentsCountChange(e, 1)}
-                    className={classes.countInput}
-                  />
-                ) : (
-                  <div className={classes.count}>
-                    {podgroups[1].countStudents}
-                  </div>
-                )}
-              </td>
-            </tr>
+            <PodgroupsCount
+              firstPodgroupCount={firstPodgroupCount}
+              secondPodgroupCount={secondPodgroupCount}
+              isEditingFirstPodgroup={isEditingFirstPodgroup}
+              isEditingSecondPodgroup={isEditingSecondPodgroup}
+              setIsEditingFirstPodgroup={setIsEditingFirstPodgroup}
+              setIsEditingSecondPodgroup={setIsEditingSecondPodgroup}
+              handleStudentsCountChange={handleStudentsCountChange}
+              handleStudentsCountSave={handleStudentsCountSave}
+              podgroups={podgroups}
+            />
           )}
 
           <tr className={classes.row}>
