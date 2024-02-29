@@ -13,9 +13,10 @@ import {
 import Card from "../card/card.component";
 
 import classes from "./groups.module.scss";
+import Loader from "../loader/loader.component";
 
 const Groups = () => {
-  const { data } = useGetDataQuery();
+  const { data, isLoading } = useGetDataQuery();
   const [saveChanges] = useSaveChangesMutation();
 
   const dispatch = useAppDispatch();
@@ -35,14 +36,25 @@ const Groups = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.groups}>
-        {groups.map((group) => {
-          return <Card key={group.uniqueId} group={group} />;
-        })}
-      </div>
-      <button className={classes.saveBtn} onClick={handleSubmit}>
-        Сохранить
-      </button>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          {groups.length > 0 && (
+            <>
+              <div className={classes.groups}>
+                {groups.map((group) => {
+                  return <Card key={group.uniqueId} group={group} />;
+                })}
+              </div>
+
+              <button className={classes.saveBtn} onClick={handleSubmit}>
+                Сохранить
+              </button>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };
