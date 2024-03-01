@@ -44,7 +44,11 @@ const Groups = () => {
             <>
               <div className={classes.groups}>
                 {groups.map((group) => {
-                  return <Card key={group.uniqueId} group={group} />;
+                  return (
+                    <div key={group.uniqueId}>
+                      <Card group={group} />
+                    </div>
+                  );
                 })}
               </div>
 
