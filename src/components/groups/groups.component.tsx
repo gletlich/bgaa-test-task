@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
-import { getGroupsData, setGroups } from "@/features/groups/groups.slice";
+import { selectGroups, setGroups } from "@/features/groups/groups.slice";
 import { setTeachers } from "@/features/teachers/teachers.slice";
 
 import {
@@ -21,7 +21,7 @@ const Groups = () => {
 
   const dispatch = useAppDispatch();
 
-  const groups = useAppSelector(getGroupsData);
+  const groups = useAppSelector(selectGroups);
 
   useEffect(() => {
     if (data) {

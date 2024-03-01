@@ -8,7 +8,7 @@ import type {
   AdditionalInfo,
   Group,
   PodgroupTeacher,
-  StudentsCount,
+  PodgroupsCount,
   TeacherType,
 } from "@/types/bgaa.types";
 
@@ -28,9 +28,9 @@ export const groupsSlice = createSlice({
       state.groups = action.payload;
     },
     createPodgroup: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
+      const groupId = action.payload;
 
-      const group = state.groups.find((group) => group.uniqueId === id);
+      const group = state.groups.find((group) => group.uniqueId === groupId);
 
       if (!group) return;
 
@@ -53,9 +53,9 @@ export const groupsSlice = createSlice({
       };
     },
     deletePodgroup: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
+      const groupId = action.payload;
 
-      const group = state.groups.find((group) => group.uniqueId === id);
+      const group = state.groups.find((group) => group.uniqueId === groupId);
 
       if (!group) return;
 
@@ -66,7 +66,7 @@ export const groupsSlice = createSlice({
       state,
       action: PayloadAction<ActivityTeacher>
     ) => {
-      const { groupId, podgroup, teacherId, activity, teacher } =
+      const { groupId, podgroup, teacherId, activity, teacherType } =
         action.payload;
 
       const group = state.groups.find((group) => group.uniqueId === groupId);
@@ -74,7 +74,7 @@ export const groupsSlice = createSlice({
       if (!group) return;
 
       if (group[activity] !== "0") {
-        group.podgroups[podgroup][teacher] = teacherId;
+        group.podgroups[podgroup][teacherType] = teacherId;
       }
     },
     assignTeacherToPodgroup: (
@@ -120,7 +120,7 @@ export const groupsSlice = createSlice({
 
       group.additionalInfo = additionalInfo;
     },
-    setStudentsCount: (state, action: PayloadAction<StudentsCount>) => {
+    setPodgroupsCount: (state, action: PayloadAction<PodgroupsCount>) => {
       const { groupId, count } = action.payload;
 
       const group = state.groups.find((group) => group.uniqueId === groupId);
@@ -140,27 +140,17 @@ export const {
   assignTeacherToActivity,
   assignTeacherToPodgroup,
   setAdditionalInfo,
-  setStudentsCount,
+  setPodgroupsCount,
 } = groupsSlice.actions;
 
-export const getGroupsData = (state: RootState) => state.groups.groups;
+export const selectGroups = (state: RootState) => state.groups.groups;
 
-export const getGroupData = (id: string) => (state: RootState) => {
-  return state.groups.groups.find((group) => group.uniqueId === id);
-};
-
-export const getTeacherId =
+export const selectTeacherId =
   (id: string, podgroup: number, teacher: TeacherType) =>
   (state: RootState) => {
     const group = state.groups.groups.find((group) => group.uniqueId === id);
 
     return group?.podgroups[podgroup]?.[teacher];
   };
-
-export const getAdditionalInfo = (id: string) => (state: RootState) => {
-  const group = state.groups.groups.find((group) => group.uniqueId === id);
-
-  return group?.additionalInfo;
-};
 
 export default groupsSlice.reducer;

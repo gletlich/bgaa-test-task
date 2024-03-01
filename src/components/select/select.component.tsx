@@ -6,14 +6,14 @@ import { useAppSelector } from "@/store/store";
 import {
   assignTeacherToActivity,
   assignTeacherToPodgroup,
-  getTeacherId,
+  selectTeacherId,
 } from "@/features/groups/groups.slice";
-import { getTeachers } from "@/features/teachers/teachers.slice";
+import { selectTeachers } from "@/features/teachers/teachers.slice";
 
 import SortIcon from "../icons/sort.icon";
 
-import { Activity, TeacherType } from "@/types/bgaa.types";
-import { SelectProps } from "./select.types";
+import type { Activity, TeacherType } from "@/types/bgaa.types";
+import type { SelectProps } from "./select.types";
 
 import classes from "./select.module.scss";
 
@@ -31,17 +31,17 @@ const Select = (props: SelectProps) => {
 
   const dispatch = useDispatch();
 
-  const teacher = useAppSelector(
-    getTeacherId(groupId, podgroup, activityToTeacher[activity])
+  const teacherId = useAppSelector(
+    selectTeacherId(groupId, podgroup, activityToTeacher[activity])
   );
-  const teachers = useAppSelector(getTeachers);
+  const teachers = useAppSelector(selectTeachers);
 
   const options = [
     { value: "", label: "Вакансия" },
     ...teachers.map((teacher) => ({ value: teacher.id, label: teacher.name })),
   ];
 
-  const chosenOption = options.find((option) => option.value === teacher) || {
+  const chosenOption = options.find((option) => option.value === teacherId) || {
     value: "",
     label: "Вакансия",
   };
@@ -63,7 +63,7 @@ const Select = (props: SelectProps) => {
                   teacherId: chosenTeacher?.value || "",
                   podgroup,
                   activity: activity,
-                  teacher: activityToTeacher[activity],
+                  teacherType: activityToTeacher[activity],
                 })
               );
             }}
@@ -74,8 +74,8 @@ const Select = (props: SelectProps) => {
               dispatch(
                 assignTeacherToPodgroup({
                   groupId,
-                  teacherId: teacher || "",
                   podgroup,
+                  teacherId: teacherId || "",
                 })
               )
             }
@@ -94,10 +94,10 @@ const Select = (props: SelectProps) => {
             dispatch(
               assignTeacherToActivity({
                 groupId,
-                teacherId: chosenTeacher?.value || "",
                 podgroup,
                 activity: activity,
-                teacher: activityToTeacher[activity],
+                teacherId: chosenTeacher?.value || "",
+                teacherType: activityToTeacher[activity],
               })
             );
           }}

@@ -57,7 +57,7 @@ export type ActivityTeacher = {
   podgroup: number;
   teacherId: string;
   activity: Activity;
-  teacher: TeacherType;
+  teacherType: TeacherType;
 };
 
 export type PodgroupTeacher = {
@@ -71,7 +71,7 @@ export type AdditionalInfo = {
   additionalInfo: string;
 };
 
-export type StudentsCount = {
+export type PodgroupsCount = {
   groupId: string;
   count: [number, number];
 };

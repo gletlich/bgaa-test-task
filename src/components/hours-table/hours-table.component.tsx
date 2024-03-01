@@ -6,7 +6,7 @@ import {
   createPodgroup,
   deletePodgroup,
   setAdditionalInfo,
-  setStudentsCount,
+  setPodgroupsCount,
 } from "@/features/groups/groups.slice";
 
 import PodgroupsCount from "../podgroups-count/podgroups-count.component";
@@ -103,7 +103,7 @@ const HoursTable = (props: HoursTableProps) => {
 
     if (podgroup === 1) count.reverse();
 
-    dispatch(setStudentsCount({ groupId: uniqueId, count }));
+    dispatch(setPodgroupsCount({ groupId: uniqueId, count }));
   };
 
   return (

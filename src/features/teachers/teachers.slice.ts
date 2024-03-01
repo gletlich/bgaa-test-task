@@ -24,6 +24,6 @@ export const teachersSlice = createSlice({
 
 export const { setTeachers } = teachersSlice.actions;
 
-export const getTeachers = (state: RootState) => state.teachers.teachers;
+export const selectTeachers = (state: RootState) => state.teachers.teachers;
 
 export default teachersSlice.reducer;
