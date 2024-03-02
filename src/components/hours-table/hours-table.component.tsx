@@ -91,7 +91,7 @@ const HoursTable = (props: HoursTableProps) => {
 
     if (
       newCount < 1 ||
-      newCount > Number(studentsNumber) ||
+      newCount >= Number(studentsNumber) ||
       Math.trunc(newCount) !== newCount
     ) {
       setFirstPodgroupCount(Number(podgroups[0].countStudents));
@@ -159,6 +159,7 @@ const HoursTable = (props: HoursTableProps) => {
               handleStudentsCountChange={handleStudentsCountChange}
               handleStudentsCountSave={handleStudentsCountSave}
               podgroups={podgroups}
+              studentsCount={Number(studentsNumber)}
             />
           )}
 

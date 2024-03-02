@@ -19,4 +19,6 @@ export type PodgroupsCountProps = {
   ) => void;
 
   podgroups: Podgroup[];
+
+  studentsCount: number;
 };

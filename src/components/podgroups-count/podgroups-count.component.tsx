@@ -13,6 +13,7 @@ const PodgroupsCount = (props: PodgroupsCountProps) => {
     handleStudentsCountSave,
     handleStudentsCountChange,
     podgroups,
+    studentsCount,
   } = props;
 
   return (
@@ -28,6 +29,8 @@ const PodgroupsCount = (props: PodgroupsCountProps) => {
             autoFocus
             onChange={(e) => handleStudentsCountChange(e, 0)}
             className={classes.countInput}
+            min={1}
+            max={studentsCount - 1}
           />
         ) : (
           <div className={classes.count}>{podgroups[0].countStudents}</div>
@@ -42,6 +45,8 @@ const PodgroupsCount = (props: PodgroupsCountProps) => {
             autoFocus
             onChange={(e) => handleStudentsCountChange(e, 1)}
             className={classes.countInput}
+            min={1}
+            max={studentsCount - 1}
           />
         ) : (
           <div className={classes.count}>{podgroups[1].countStudents}</div>
