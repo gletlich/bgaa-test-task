@@ -89,7 +89,11 @@ const HoursTable = (props: HoursTableProps) => {
 
     const newCount = podgroup === 0 ? firstPodgroupCount : secondPodgroupCount;
 
-    if (newCount < 1 || newCount > Number(studentsNumber)) {
+    if (
+      newCount < 1 ||
+      newCount > Number(studentsNumber) ||
+      Math.trunc(newCount) !== newCount
+    ) {
       setFirstPodgroupCount(Number(podgroups[0].countStudents));
       setSecondPodgroupCount(Number(podgroups[1].countStudents));
 
